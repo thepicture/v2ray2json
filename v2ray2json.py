@@ -984,7 +984,7 @@ def get_log():
 def get_inbound():
     inbound = InboundBean(
         tag = "in_proxy",
-        port = 1080,
+        port = INBOUND_PORT,
         protocol = EConfigType.SOCKS.protocolName,
         listen = "127.0.0.1",
         settings = InboundBean.InSettingsBean(
@@ -1413,10 +1413,16 @@ if __name__ == "__main__":
         help = "A vmess://, vless://, trojan://, ... link.",
     )
 
+    parser.add_argument(
+        "-p",
+        help = "Inbound port (defaults to 1080)",
+    )
 
 
     option = parser.parse_args()
     config = option.config
+
+    INBOUND_PORT = option.p or 1080
 
     print(generateConfig(config))
 
