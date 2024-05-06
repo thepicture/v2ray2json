@@ -2,6 +2,7 @@ import json
 import base64
 import argparse
 import re
+import sys
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
 from urllib.parse import unquote
@@ -1420,7 +1421,12 @@ if __name__ == "__main__":
 
 
     option = parser.parse_args()
-    config = option.config
+    config = None
+
+    if sys.stdin.isatty():
+        config = option.config
+    else:
+        config = sys.stdin.read()
 
     INBOUND_PORT = option.p or 1080
 
